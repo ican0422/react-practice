@@ -1,5 +1,6 @@
 package com.careerthon.reactpractice.common.config;
 
+import com.careerthon.reactpractice.domain.user.entity.UserRole;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
@@ -74,7 +75,7 @@ public class JwtUtils {
     }
 
     // 토큰 생성
-    public String createToken(Long id, String username, String nickname) {
+    public String createToken(Long id, String username, String nickname, UserRole userRole) {
         // 생성 시간
         Date now = new Date();
 
@@ -86,6 +87,7 @@ public class JwtUtils {
                 .setSubject(id.toString())                // 사용자 ID
                 .claim("userName", username)          // 사용자 이름
                 .claim("nickName", nickname)          // 닉네임
+                .claim("userRole", userRole)          // 권한
                 .claim("tokenType", "access")     // 토큰 타입 (엑세스 토큰)
                 .setExpiration(expiryDate)              // 만료 시간
                 .setIssuedAt(now)                       // 발급 시간
