@@ -1,9 +1,6 @@
 package com.careerthon.reactpractice.common.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -19,9 +16,11 @@ import java.util.Date;
 public abstract class Timestamped {
     @CreatedDate
     @Column(updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
     @LastModifiedDate
     @Column
+    @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
 }
