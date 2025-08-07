@@ -1,9 +1,9 @@
-# ?????? ??
+# 애플리케이션 이름 설정
 spring:
   application:
     name: react-practice
 
-  # MySQL ?????? ??
+  # MySQL 데이터베이스 설정
   datasource:
     url: jdbc:mysql://localhost:3306/onboard
     username: root
@@ -13,7 +13,7 @@ spring:
   # Hibernate
   jpa:
     hibernate:
-      ddl-auto: update  # Hibernate? DB ???? ???? ??/??????? ??
+      ddl-auto: update  # Hibernate가 DB 테이블을 자동으로 생성/업데이트하도록 설정
     properties:
       hibernate:
         show_sql: true
@@ -21,7 +21,7 @@ spring:
         use_sql_comments: true
         dialect: org.hibernate.dialect.MySQLDialect
 
-# JWT ?? ??
+# JWT 토큰 설정
 jwt:
   secret:
     key: ${JWT_SECRET_KEY}
