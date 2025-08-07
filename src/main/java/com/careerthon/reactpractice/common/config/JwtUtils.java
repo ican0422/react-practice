@@ -76,7 +76,7 @@ public class JwtUtils {
     }
 
     // 토큰 생성
-    public String createToken(Long id, String username, String nickname, UserRole userRole) {
+    public String createToken(Long id, String userId, String username, String nickname, UserRole userRole) {
         // 생성 시간
         Date now = new Date();
 
@@ -86,6 +86,7 @@ public class JwtUtils {
         // 토큰 설정
         return Jwts.builder()
                 .setSubject(id.toString())                // 사용자 ID
+                .claim("userId", userId)               // 유저 아이디
                 .claim("userName", username)          // 사용자 이름
                 .claim("nickName", nickname)          // 닉네임
                 .claim("userRole", userRole)          // 권한
