@@ -8,6 +8,8 @@ import com.careerthon.reactpractice.domain.user.dto.respons.UserLoginResponseDto
 import com.careerthon.reactpractice.domain.user.dto.respons.UserSignupResponseDto;
 import com.careerthon.reactpractice.domain.user.entity.User;
 import com.careerthon.reactpractice.domain.user.entity.UserRole;
+import com.careerthon.reactpractice.domain.user.exception.UserException;
+import com.careerthon.reactpractice.domain.user.exception.UserExceptionConst;
 import com.careerthon.reactpractice.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +27,7 @@ public class UserService {
     public UserSignupResponseDto signup(UserSignupRequestDto requestDto) {
         // 가입 됐는지 검증
         if(userRepo.existsByUserId(requestDto.getUserId())) {
-            throw new IllegalArgumentException("이미 가입된 유저 입니다.");
+            throw new UserException("이미 가입된 유저 입니다.", UserExceptionConst.DUPLICATE_USER);
         }
 
         // 비밀번호 암호화
@@ -52,12 +54,12 @@ public class UserService {
     public UserLoginResponseDto login(UserLoginRequestDto requestDto) {
         // 회원가입 되어 있는지 확인 -> 가입되어 있으면 정보를 가져온다.
         User user = userRepo.findByUserId(requestDto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("회원 정보를 찾을 수 없습니다."));
+                .orElseThrow(() -> new UserException("회원 정보를 찾을 수 없습니다.", UserExceptionConst.USER_NOT_FOUND));
 
         // 비밀번호 확인
         boolean verify = passwordEncoder.verify(requestDto.getPassword(), user.getPassword());
         if(!verify) {
-            throw new IllegalArgumentException("잘못 된 비밀번호 입니다.");
+            throw new UserException("잘못 된 비밀번호 입니다.", UserExceptionConst.INVALID_PASSWORD);
         }
 
         // 토큰 생성
