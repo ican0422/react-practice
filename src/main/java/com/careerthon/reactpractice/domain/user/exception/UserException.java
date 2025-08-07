@@ -1,14 +1,10 @@
 package com.careerthon.reactpractice.domain.user.exception;
+import com.careerthon.reactpractice.common.exception.GlobalException;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
-public class UserException extends RuntimeException {
-    private final UserExceptionConst status;
-
+public class UserException extends GlobalException {
     public UserException(String message, UserExceptionConst status) {
-        super(message);
-        this.status = status;
+        super(message, status);
     }
 }
