@@ -12,8 +12,9 @@ import lombok.NoArgsConstructor;
 public class User extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
 
+    private String userId;
     private String username;
     private String nickname;
     private String password;
