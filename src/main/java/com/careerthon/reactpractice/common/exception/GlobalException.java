@@ -7,9 +7,15 @@ import lombok.Getter;
 @Getter
 public class GlobalException extends RuntimeException {
     private final BaseExceptionConst exceptionConst;
+    private final Object data;
 
     public GlobalException(String message, BaseExceptionConst exceptionConst) {
+        this(message, exceptionConst, null);
+    }
+
+    public GlobalException(String message, BaseExceptionConst exceptionConst, Object data) {
         super(message);
         this.exceptionConst = exceptionConst;
+        this.data = data;
     }
 }
