@@ -1,5 +1,6 @@
 package com.careerthon.reactpractice.common.config;
 
+import com.careerthon.reactpractice.common.entity.JwtExceptionConst;
 import com.careerthon.reactpractice.common.exception.JwtValidationResultException;
 import com.careerthon.reactpractice.domain.user.entity.UserRole;
 import io.jsonwebtoken.*;
@@ -56,7 +57,7 @@ public class JwtUtils {
     public Claims validateAndExtractClaims(String token) {
         // 토큰이 비어 있는 경우
         if (token == null || token.trim().isEmpty()) {
-            throw new JwtValidationResultException("토큰이 비어 있습니다.");
+            throw new JwtValidationResultException("토큰이 비어 있습니다.", JwtExceptionConst.EMPTY_TOKEN);
         }
 
         try {
@@ -65,13 +66,13 @@ public class JwtUtils {
             log.info("JWT 클레임 성공적으로 추출: {}", claims);
             return claims;
         } catch (ExpiredJwtException e) {
-            throw new JwtValidationResultException("토큰 만료", e);
+            throw new JwtValidationResultException("토큰 만료", JwtExceptionConst.TOKEN_EXPIRED, e);
         } catch (SignatureException e) {
-            throw new JwtValidationResultException("토큰 서명이 일치하지 않습니다.", e);
+            throw new JwtValidationResultException("토큰 서명이 일치하지 않습니다.", JwtExceptionConst.INVALID_SIGNATURE, e);
         } catch (JwtException e) {
-            throw new JwtValidationResultException("토큰 구문 분석 실패", e);
+            throw new JwtValidationResultException("토큰 구문 분석 실패", JwtExceptionConst.MALFORMED_TOKEN, e);
         } catch (Exception e) {
-            throw new JwtValidationResultException("클레임을 추출하는 동안 예상치 못한 오류 발생", e);
+            throw new JwtValidationResultException("클레임을 추출하는 동안 예상치 못한 오류 발생", JwtExceptionConst.CLAIM_EXTRACTION_ERROR, e);
         }
     }
 

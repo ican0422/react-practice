@@ -1,10 +1,13 @@
 package com.careerthon.reactpractice.common.exception;
 
-public class JwtValidationResultException extends RuntimeException {
-    public JwtValidationResultException(String message) {
-        super(message);
+import com.careerthon.reactpractice.common.entity.JwtExceptionConst;
+
+public class JwtValidationResultException extends GlobalException {
+    public JwtValidationResultException(String message, JwtExceptionConst status) {
+        super(message, status);
     }
-    public JwtValidationResultException(String message, Throwable e) {
-        super(message, e);
+    public JwtValidationResultException(String message, JwtExceptionConst status, Throwable e) {
+        super(message, status);
+        initCause(e);
     }
 }
